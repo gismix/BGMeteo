@@ -6,17 +6,22 @@
 
     <script src="script.js" defer></script>
 </head>
-
 <body>
-    <h1>BGMETEO Online</h1>
-
+    <h1>BGMeteo</h1>
+    <h3>Scopri il meteo di tutta Italia. Efficiente e sicuro.</h3>
     <p>
-        Scopri il meteo attuale di tutta Italia
+        Iniziamo subito!
     </p>
+        <p>Seleziona una provincia:</p>
+        <select id="selezionaProvincia">
+            <option value="">Seleziona una provincia</option>
+        </select><br>
+        <p>Seleziona un comune della provincia:</p>
+        <select id="selezionaComune">
+            <option value="">Seleziona un comune</option>
+        </select>
 
-    <button id="btnComuni">Carica elenco comuni</button>
-    <button id="btnMeteo">Carica meteo Padova</button>
-
+    </form>
     <h2>Risultato:</h2>
     <pre id="output">Premi un pulsante per visualizzare il risultato.</pre>
 </body>
