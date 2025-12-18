@@ -73,6 +73,8 @@ function print_comuni(url_comuni){
             + lista_comuni.slice(0, 5).map(c => "- " + c.nome).join("\n");
             console.log("Array dei comuni italiani")
             console.log(lista_comuni)
+            
+            
     })
     .catch(err => {
         output.textContent = "Errore nel caricamento dei comuni.\n" + err;
