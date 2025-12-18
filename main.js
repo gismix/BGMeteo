@@ -13,6 +13,16 @@ function load_comuni(url_comuni){
             + lista_comuni.slice(0, 5).map(c => "- " + c.nome).join("\n");
             console.log("Array dei comuni italiani")
             console.log(lista_comuni)
+            
+            //selezione provincie
+            document.addEventListener("DOMContentLoaded", function(){
+                for (let i=0; i<lista_comuni.length; i++){
+                    const option = document.createElement("option");
+                    option.value = lista_comuni[i].value;
+                    option.innerHTML = lista_comuni[i].text;
+                    aeroportoPartenzaSelect.append(option);
+                }
+            });
     })
     .catch(err => {
         output.textContent = "Errore nel caricamento dei comuni.\n" + err;
