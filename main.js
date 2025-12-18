@@ -4,6 +4,11 @@ const url_comuni = "https://raw.githubusercontent.com/matteocontrini/comuni-json
 output.textContent = "Stiamo caricando i Comuni"
 
 
+const province = document.getElementById("selezionaProvincia")
+const comuni = document.getElementById("selezionaComune")
+
+const form = document.getElementById("formMeteo")
+
 function load_comuni(url_comuni){
     fetch(url_comuni).then(promise => promise.json()).then(lista_comuni => {
 
