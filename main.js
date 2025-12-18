@@ -4,12 +4,67 @@ const url_comuni = "https://raw.githubusercontent.com/matteocontrini/comuni-json
 output.textContent = "Stiamo caricando i Comuni"
 
 
-const province = document.getElementById("selezionaProvincia")
-const comuni = document.getElementById("selezionaComune")
+const form = document.getElementById("meteoForm")
+const lista_comuni = []
 
-const form = document.getElementById("formMeteo")
 
-function load_comuni(url_comuni){
+document.addEventListener("DOMContentLoaded", function(){
+    load_comuni(url_comuni).then(() => {
+        for(let i = 0; i < lista_comuni.length; i++){
+            const provincia = document.createElement("option")
+            provincia.value = lista_comuni[i].sigla
+            provincia.innerHTML = lista_comuni[i].provincia.nome
+            console.log(provincia)
+            form.selezionaProvincia.appendChild(provincia)
+        }
+        print_comuni(url_comuni) 
+    });
+});
+
+
+
+
+function load_comuni(url_comuni) {
+    return new Promise((resolve, reject) => {
+        fetch(url_comuni).then(promise => promise.json()).then(dati => {
+            lista_comuni.push(...dati)
+            console.log(lista_comuni)
+            resolve();
+        })
+        .catch(err => {
+            output.textContent = "Errore nel caricamento dei comuni.\n" + err;
+            reject(err);
+        });
+    });
+}
+    fetch(url_comuni).then(promise => promise.json()).then(dati => {
+        lista_comuni.push(...dati)
+        console.log(lista_comuni)
+    })
+    .catch(err => {
+        output.textContent = "Errore nel caricamento dei comuni.\n" + err;
+    });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+function print_comuni(url_comuni){
     fetch(url_comuni).then(promise => promise.json()).then(lista_comuni => {
 
         output.textContent = 
@@ -24,4 +79,5 @@ function load_comuni(url_comuni){
     });
 }
 
-load_comuni(url_comuni)
+print_comuni(url_comuni)
+
