@@ -35,8 +35,17 @@ function load_comuni(url_comuni) {
     return new Promise((resolve, reject) => {
         fetch(url_comuni).then(promise => promise.json()).then(dati => {
             lista_comuni.push(...dati)
+
             console.log(lista_comuni)
             resolve();
+            for(let i = 0; i < lista_comuni.length; i++){
+                for(let j = 0; j < lista_comuni.length; j++){
+                    if(i !== j && lista_comuni[i].provincia.codice === lista_comuni[j].provincia.codice){
+                        lista_comuni.splice(j, 1);
+                    }
+                }
+            }
+            console.log(lista_comuni)
         })
         .catch(err => {
             output.textContent = "Errore nel caricamento dei comuni.\n" + err;
@@ -46,6 +55,7 @@ function load_comuni(url_comuni) {
 }
     fetch(url_comuni).then(promise => promise.json()).then(dati => {
         lista_comuni.push(...dati)
+        
         console.log(lista_comuni)
     })
     .catch(err => {
