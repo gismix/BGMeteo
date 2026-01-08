@@ -6,7 +6,7 @@ output.textContent = "Stiamo caricando i Comuni"
 
 const form = document.getElementById("meteoForm")
 const lista_comuni = []
-const proValues = document.getElementById("cityname") 
+const proValues = document.getElementById("listaProvince")
 
 
 document.addEventListener("DOMContentLoaded", function(){
@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", function(){
         for(let i = 0; i < lista_comuni.length; i++){
            
             const provincia = document.createElement("option")
-            provincia.value = lista_comuni[i].provincia.nome; // Nome completo visibile
+            provincia.value = lista_comuni[i].provincia.nome; 
             provincia.setAttribute("data-sigla", lista_comuni[i].sigla)
             //console.log(provincia)
             proValues.appendChild( provincia)
