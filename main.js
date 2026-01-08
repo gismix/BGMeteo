@@ -33,34 +33,36 @@ document.addEventListener("DOMContentLoaded", function(){
 
 function load_comuni(url_comuni) {
     return new Promise((resolve, reject) => {
-        fetch(url_comuni).then(promise => promise.json()).then(dati => {
-            lista_comuni.push(...dati)
+        fetch(url_comuni)
+            .then(res => res.json())
+            .then(dati => {
 
-            console.log(lista_comuni)
-            resolve();
-            for(let i = 0; i < lista_comuni.length; i++){
-                for(let j = 0; j < lista_comuni.length; j++){
-                    if(i !== j && lista_comuni[i].provincia.codice === lista_comuni[j].provincia.codice){
-                        lista_comuni.splice(j, 1);
+                lista_comuni.push(...dati);
+
+                for (let i = 0; i < lista_comuni.length; i++) {
+                    for (let j = i + 1; j < lista_comuni.length; j++) {
+
+                        if (lista_comuni[i].provincia.codice === lista_comuni[j].provincia.codice) {
+                            lista_comuni.splice(j, 1);
+                            j--;
+                        }
                     }
                 }
-            }
-            console.log(lista_comuni)
-        })
-        .catch(err => {
-            output.textContent = "Errore nel caricamento dei comuni.\n" + err;
-            reject(err);
-        });
+
+                // ordinamento alfabetico province
+                lista_comuni.sort((a, b) =>
+                    a.provincia.nome.localeCompare(b.provincia.nome)
+                );
+
+                console.log(lista_comuni);
+                resolve();
+            })
+            .catch(err => {
+                output.textContent = "Errore nel caricamento dei comuni.\n" + err;
+                reject(err);
+            });
     });
 }
-    fetch(url_comuni).then(promise => promise.json()).then(dati => {
-        lista_comuni.push(...dati)
-        
-        console.log(lista_comuni)
-    })
-    .catch(err => {
-        output.textContent = "Errore nel caricamento dei comuni.\n" + err;
-    });
 
 
 
