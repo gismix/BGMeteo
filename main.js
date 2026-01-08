@@ -7,6 +7,7 @@ output.textContent = "Stiamo caricando i Comuni"
 const form = document.getElementById("meteoForm")
 const lista_comuni = []
 const proValues = document.getElementById("listaProvince")
+const comValues = document.getElementById("listaComuni")
 
 
 document.addEventListener("DOMContentLoaded", function(){
@@ -21,6 +22,12 @@ document.addEventListener("DOMContentLoaded", function(){
             
         }
         print_comuni(url_comuni) 
+
+        const provinciaInput = document.getElementById("provinciaInput");
+        provinciaInput.addEventListener("input", function () {
+            const provinciaSelezionata = provinciaInput.value;
+            aggiornaComuni(provinciaSelezionata);
+        });
     });
 });
 
@@ -70,9 +77,26 @@ function load_comuni(url_comuni) {
 
 
 
+function aggiornaComuni(provinciaSelezionata) {
+    comValues.innerHTML = ""; // Svuota i comuni precedenti
 
+    // Filtra i comuni in base alla provincia selezionata (ignora maiuscole/minuscole)
+    const comuniFiltrati = lista_comuni.filter(comune => 
+        comune.provincia.nome.toLowerCase() === provinciaSelezionata.trim().toLowerCase()
+    );
 
+    // Aggiungi i comuni filtrati al datalist
+    comuniFiltrati.forEach(comune => {
+        const comuneOption = document.createElement("option");
+        comuneOption.value = comune.nome; // Nome del comune
+        comValues.appendChild(comuneOption);
+    });
 
+    // Se nessun comune è trovato, mostra un messaggio nella console
+    if (comuniFiltrati.length === 0) {
+        console.warn("Nessun comune trovato per la provincia selezionata:", provinciaSelezionata);
+    }
+}
 
 
 
