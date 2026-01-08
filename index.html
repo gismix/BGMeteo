@@ -13,12 +13,26 @@
         Iniziamo subito!
     </p>
     <form id="meteoForm">
+       
         <p>Seleziona una provincia:</p>
+        
+        <input type="text" name="provincia" id="provinciaInput" list="cityname" placeholder="Inserisci il nome della provincia">
+        <datalist id="cityname">
+            <!-- Le opzioni saranno aggiunte dinamicamente -->
+        </datalist>
+        
+        <br>
+
+    
+
         <select name="selezionaProvincia"></select><br>
+        
         <p>Seleziona un comune della provincia:</p>
         <select name="selezionaComune">
             <option value="">Seleziona un comune</option>
         </select>
+        <br>
+        
 
     </form>
     <h2>Risultato:</h2>
