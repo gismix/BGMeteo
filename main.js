@@ -8,32 +8,23 @@ const form = document.getElementById("meteoForm")
 const lista_comuni = []
 const proValues = document.getElementById("cityname") 
 
-/**
+
 document.addEventListener("DOMContentLoaded", function(){
     load_comuni(url_comuni).then(() => {
         for(let i = 0; i < lista_comuni.length; i++){
            
             const provincia = document.createElement("option")
-            provincia.value = lista_comuni[i].sigla
-            provincia.innerHTML =  lista_comuni[i].provincia.nome
+            provincia.value = lista_comuni[i].provincia.nome; // Nome completo visibile
+            provincia.setAttribute("data-sigla", lista_comuni[i].sigla)
             //console.log(provincia)
             proValues.appendChild( provincia)
             
         }
         print_comuni(url_comuni) 
     });
-});*/
-
-document.addEventListener("DOMContentLoaded", function () {
-    load_comuni(url_comuni).then(() => {
-        for (let i = 0; i < lista_comuni.length; i++) {
-            const provincia = document.createElement("option");
-            provincia.value = lista_comuni[i].provincia.nome; // Nome completo visibile
-            provincia.setAttribute("data-sigla", lista_comuni[i].sigla); // Sigla come attributo personalizzato
-            proValues.appendChild(provincia);
-        }
-    });
 });
+
+
 
 
 //028
