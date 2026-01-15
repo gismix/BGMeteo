@@ -12,22 +12,29 @@ const comValues = document.getElementById("listaComuni")
 
 document.addEventListener("DOMContentLoaded", function(){
     load_comuni(url_comuni).then(() => {
-        for(let i = 0; i < lista_comuni.length; i++){
-           
-            const provincia = document.createElement("option")
-            provincia.value = lista_comuni[i].provincia.nome; 
-            provincia.setAttribute("data-sigla", lista_comuni[i].sigla)
-            //console.log(provincia)
-            proValues.appendChild( provincia)
-            
-        }
-        print_comuni(url_comuni) 
+        // Crea un set di province uniche
+        const provinceUniche = new Set();
+        lista_comuni.forEach(comune => {
+            provinceUniche.add(comune.provincia.nome);
+        });
 
+        // Ordina le province alfabeticamente e aggiungile al datalist
+        const provinceOrdinate = Array.from(provinceUniche).sort((a, b) => a.localeCompare(b));
+        provinceOrdinate.forEach(provinciaNome => {
+            const provincia = document.createElement("option");
+            provincia.value = provinciaNome;
+            proValues.appendChild(provincia);
+        });
+        
+        // Aggiungi il listener per l'input della provincia
         const provinciaInput = document.getElementById("provinciaInput");
         provinciaInput.addEventListener("input", function () {
             const provinciaSelezionata = provinciaInput.value;
             aggiornaComuni(provinciaSelezionata);
         });
+
+        // Chiamata iniziale per aggiornare i comuni se c'è già una provincia selezionata
+        aggiornaComuni(provinciaInput.value);
     });
 });
 
@@ -43,23 +50,10 @@ function load_comuni(url_comuni) {
         fetch(url_comuni)
             .then(res => res.json())
             .then(dati => {
-
                 lista_comuni.push(...dati);
 
-                for (let i = 0; i < lista_comuni.length; i++) {
-                    for (let j = i + 1; j < lista_comuni.length; j++) {
-
-                        if (lista_comuni[i].provincia.codice === lista_comuni[j].provincia.codice) {
-                            lista_comuni.splice(j, 1);
-                            j--;
-                        }
-                    }
-                }
-
-                // ordinamento alfabetico province
-                lista_comuni.sort((a, b) =>
-                    a.provincia.nome.localeCompare(b.provincia.nome)
-                );
+                // Rimuovi il loop di deduplicazione che stava eliminando comuni
+                // Invece, mantieni tutti i comuni
 
                 console.log(lista_comuni);
                 resolve();
@@ -71,12 +65,22 @@ function load_comuni(url_comuni) {
     });
 }
 
+function aggiornaComuni(provinciaSelezionata) {
+    comValues.innerHTML = ""; // Pulisce la lista dei comuni
+    const comuniFiltrati = lista_comuni.filter(comune => comune.provincia.nome === provinciaSelezionata);
+
+    // Ordinamento alfabetico dei comuni filtrati
+    comuniFiltrati.sort((a, b) => a.nome.localeCompare(b.nome));
+
+    comuniFiltrati.forEach(comune => {
+        const comuneOption = document.createElement("option");
+        comuneOption.value = comune.nome;
+        comValues.appendChild(comuneOption);
+    });
+}
 
 
 
-
-
-    
 
 function print_comuni(url_comuni){
     fetch(url_comuni).then(promise => promise.json()).then(lista_comuni => {
