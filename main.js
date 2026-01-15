@@ -97,3 +97,21 @@ function print_comuni(url_comuni){
 
 print_comuni(url_comuni)
 
+//MAPPA 
+
+let map = L.map('map').setView([45.380372, 11.652963], 13);
+
+
+L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+}).addTo(map);
+
+/*cerchi e cose varie*/
+let bastia = L.marker([45.380372, 11.652963]).addTo(map);
+var stra = L.circle([45.409659, 12.021065], {
+    color: 'pink',
+    fillColor: 'pink',
+    fillOpacity: 0.5,
+    radius: 50
+}).addTo(map);
