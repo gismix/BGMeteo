@@ -1,121 +1,159 @@
+// Variabili globali
+let tuttiIComuni = [];
+let mappa;
+let markerLayer = L.layerGroup();
+let comuniProvincia = [];
 
-
-const url_comuni = "https://raw.githubusercontent.com/matteocontrini/comuni-json/master/comuni.json"
-output.textContent = "Stiamo caricando i Comuni"
-
-
-const form = document.getElementById("meteoForm")
-const lista_comuni = []
-const proValues = document.getElementById("listaProvince")
-const comValues = document.getElementById("listaComuni")
-
-
-document.addEventListener("DOMContentLoaded", function(){
-    load_comuni(url_comuni).then(() => {
-        // Crea un set di province uniche
-        const provinceUniche = new Set();
-        lista_comuni.forEach(comune => {
-            provinceUniche.add(comune.provincia.nome);
-        });
-
-        // Ordina le province alfabeticamente e aggiungile al datalist
-        const provinceOrdinate = Array.from(provinceUniche).sort((a, b) => a.localeCompare(b));
-        provinceOrdinate.forEach(provinciaNome => {
-            const provincia = document.createElement("option");
-            provincia.value = provinciaNome;
-            proValues.appendChild(provincia);
-        });
-        
-        // Aggiungi il listener per l'input della provincia
-        const provinciaInput = document.getElementById("provinciaInput");
-        provinciaInput.addEventListener("input", function () {
-            const provinciaSelezionata = provinciaInput.value;
-            aggiornaComuni(provinciaSelezionata);
-        });
-
-        // Chiamata iniziale per aggiornare i comuni se c'è già una provincia selezionata
-        aggiornaComuni(provinciaInput.value);
-    });
+// Inizializza tutto quando la pagina è pronta
+document.addEventListener('DOMContentLoaded', function() {
+    // 1. Inizializza la mappa
+    mappa = L.map('map').setView([42.5, 12.5], 6);
+    
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(mappa);
+    
+    markerLayer.addTo(mappa);
+    
+    // 2. Carica i comuni
+    caricaComuni();
+    
+    // 3. Imposta event listener per le select
+    document.getElementById('selectRegione').addEventListener('change', aggiornaProvince);
+    document.getElementById('selectProvincia').addEventListener('change', aggiornaMappa);
 });
 
+// Carica il file JSON dei comuni
+async function caricaComuni() {
+    try {
+        const response = await fetch('https://raw.githubusercontent.com/matteocontrini/comuni-json/master/comuni.json');
+        tuttiIComuni = await response.json();
+        
+        // Popola le regioni
+        popolaRegioni();
+    } catch (error) {
+        console.error('Errore nel caricamento dei comuni:', error);
+        alert('Impossibile caricare l\'elenco dei comuni. Riprova più tardi.');
+    }
+}
 
-
-
-//028
-
-
-
-function load_comuni(url_comuni) {
-    return new Promise((resolve, reject) => {
-        fetch(url_comuni)
-            .then(res => res.json())
-            .then(dati => {
-                lista_comuni.push(...dati);
-
-                // Rimuovi il loop di deduplicazione che stava eliminando comuni
-                // Invece, mantieni tutti i comuni
-
-                console.log(lista_comuni);
-                resolve();
-            })
-            .catch(err => {
-                output.textContent = "Errore nel caricamento dei comuni.\n" + err;
-                reject(err);
-            });
+// Estrai e popola le regioni
+function popolaRegioni() {
+    const selectRegione = document.getElementById('selectRegione');
+    
+    // Estrai nomi regione (eliminando duplicati)
+    const regioni = [...new Set(tuttiIComuni.map(comune => comune.regione.nome))];
+    
+    // Ordina alfabeticamente
+    regioni.sort();
+    
+    // Aggiungi opzioni alla select
+    regioni.forEach(regione => {
+        const option = document.createElement('option');
+        option.value = regione;
+        option.textContent = regione;
+        selectRegione.appendChild(option);
     });
 }
 
-function aggiornaComuni(provinciaSelezionata) {
-    comValues.innerHTML = ""; // Pulisce la lista dei comuni
-    const comuniFiltrati = lista_comuni.filter(comune => comune.provincia.nome === provinciaSelezionata);
-
-    // Ordinamento alfabetico dei comuni filtrati
-    comuniFiltrati.sort((a, b) => a.nome.localeCompare(b.nome));
-
-    comuniFiltrati.forEach(comune => {
-        const comuneOption = document.createElement("option");
-        comuneOption.value = comune.nome;
-        comValues.appendChild(comuneOption);
+// Aggiorna le province quando cambia la regione
+function aggiornaProvince() {
+    const regioneSelezionata = document.getElementById('selectRegione').value;
+    const selectProvincia = document.getElementById('selectProvincia');
+    
+    // Reset
+    selectProvincia.innerHTML = '<option value="">Seleziona una provincia...</option>';
+    comuniProvincia = [];
+    markerLayer.clearLayers();
+    
+    if (!regioneSelezionata) return;
+    
+    // Filtra comuni per regione
+    const comuniRegione = tuttiIComuni.filter(
+        comune => comune.regione.nome === regioneSelezionata
+    );
+    
+    // Estrai province (nome)
+    const province = [...new Set(comuniRegione.map(comune => comune.provincia.nome))];
+    
+    // Ordina
+    province.sort();
+    
+    // Popola select provincia
+    province.forEach(provincia => {
+        const option = document.createElement('option');
+        option.value = provincia;
+        option.textContent = provincia;
+        selectProvincia.appendChild(option);
     });
 }
 
-
-
-
-function print_comuni(url_comuni){
-    fetch(url_comuni).then(promise => promise.json()).then(lista_comuni => {
-
-        output.textContent = 
-            "Numero totale di comuni: " + lista_comuni.length +"\n"+"Apri la console per vederli tutti. "+"\n\n"
-            + "Primi 5 comuni:\n"
-            + lista_comuni.slice(0, 5).map(c => "- " + c.nome).join("\n");
-            console.log("Array dei comuni italiani")
-            console.log(lista_comuni)
+// Aggiorna la mappa quando cambia la provincia
+async function aggiornaMappa() {
+    const provinciaSelezionata = document.getElementById('selectProvincia').value;
+    
+    if (!provinciaSelezionata) return;
+    
+    // Filtra comuni per provincia
+    comuniProvincia = tuttiIComuni.filter(
+        comune => comune.provincia.nome === provinciaSelezionata
+    );
+    
+    // Pulisci marker precedenti
+    markerLayer.clearLayers();
+    
+    // Aggiungi marker per ogni comune
+    const bounds = L.latLngBounds([]);
+    
+    for (const comune of comuniProvincia) {
+        // Ottieni latitudine e longitudine
+        const coordinate = await getCoordinateComune(comune);
+        
+        if (coordinate) {
+            // Crea marker
+            const marker = L.marker([coordinate.lat, coordinate.lng]);
             
+            // Popup base
+            const popupContent = `
+                <div style="text-align: center;">
+                    <strong>${comune.nome}</strong><br>
+                    Provincia: ${comune.provincia.sigla}<br>
+                    <a href="dettaglio.html?nome=${encodeURIComponent(comune.nome)}&lat=${coordinate.lat}&lon=${coordinate.lng}">
+                        Dettaglio meteo
+                    </a>
+                </div>
+            `;
             
-    })
-    .catch(err => {
-        output.textContent = "Errore nel caricamento dei comuni.\n" + err;
-    });
+            marker.bindPopup(popupContent);
+            marker.addTo(markerLayer);
+            
+            // Espandi bounds per fitBounds
+            bounds.extend([coordinate.lat, coordinate.lng]);
+        }
+    }
+    
+    // Adatta la vista a tutti i marker
+    if (bounds.isValid()) {
+        mappa.fitBounds(bounds, { padding: [50, 50] });
+    }
 }
 
-print_comuni(url_comuni)
-
-//MAPPA 
-
-let map = L.map('map').setView([45.380372, 11.652963], 13);
-
-
-L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    maxZoom: 19,
-    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-}).addTo(map);
-
-/*cerchi e cose varie*/
-let bastia = L.marker([45.380372, 11.652963]).addTo(map);
-var stra = L.circle([45.409659, 12.021065], {
-    color: 'pink',
-    fillColor: 'pink',
-    fillOpacity: 0.5,
-    radius: 50
-}).addTo(map);
+// Ottieni coordinate da Open-Meteo
+async function getCoordinateComune(comune) {
+    try {
+        const response = await fetch(
+            `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(comune.nome)}&count=1&language=it`
+        );
+        const data = await response.json();
+        
+        if (data.results && data.results.length > 0) {
+            return {
+                lat: data.results[0].latitude,
+                lng: data.results[0].longitude
+            };
+        }
+    } catch (error) {
+        console.error(`Errore coordinate per ${comune.nome}:`, error);
+    }
+    return null;
+}

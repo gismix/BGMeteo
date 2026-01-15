@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dettaglio Meteo</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back-link">← Torna alla mappa</a>
+        <h1 id="titoloComune">Dettaglio Meteo</h1>
+        
+        <div class="meteo-attuale">
+            <h2>Meteo Attuale</h2>
+            <div id="datiAttuali">
+                <p>Caricamento...</p>
+            </div>
+        </div>
+        
+        <div class="previsioni">
+            <h2>Previsioni 5 giorni</h2>
+            <table id="tabellaPrevisioni">
+                <thead>
+                    <tr>
+                        <th>Data</th>
+                        <th>Max (°C)</th>
+                        <th>Min (°C)</th>
+                        <th>Precipitazioni (mm)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Verrà popolato via JavaScript -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+    <script src="dettaglio.js"></script>
+</body>
+</html>

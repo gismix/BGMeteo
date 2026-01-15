@@ -2,58 +2,37 @@
 <html lang="it">
 <head>
     <meta charset="UTF-8">
-    <title>BGMeteo</title>
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>App Meteo Italia</title>
     <link rel="stylesheet" href="style.css">
-    <script src="main.js" defer></script>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
-     <!-- Make sure you put this AFTER Leaflet's CSS -->
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="crossorigin=""></script>
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 </head>
 <body>
-    <h1>BGMeteo</h1>
-    <h3>Scopri il meteo di tutta Italia. Efficiente e sicuro.</h3>
-    <p>
-        Iniziamo subito!
-    </p>
-    <form id="meteoForm">
+    <div class="container">
+        <h1>App Meteo Comuni Italiani</h1>
         
+        <div class="controls">
+            <div class="select-group">
+                <label for="selectRegione">Regione:</label>
+                <select id="selectRegione">
+                    <option value="">Seleziona una regione...</option>
+                </select>
+            </div>
+            
+            <div class="select-group">
+                <label for="selectProvincia">Provincia:</label>
+                <select id="selectProvincia">
+                    <option value="">Seleziona una provincia...</option>
+                </select>
+            </div>
+        </div>
         
-        <!-- SELEZIONE DELLA PROVINCIA -->
-        <p>Seleziona una provincia:</p>
-        <input type="text" name="provincia" id="provinciaInput" list="listaProvince" placeholder="Inserisci il nome della provincia">
-        <datalist id="listaProvince">
-            <!-- opzioni che verranno aggiuntre tramite il js -->
-        </datalist>
-         <br>
-
-
-        <!-- SELEZIONE DEL COMUNE -->
-        <p>Seleziona un comune della provincia:</p>
-        <input type="text" name="comune" id="comuneInput" list="listaComuni" placeholder="Inserisci il nome del comune">
-        <datalist id="listaComuni">
-            <!-- Le opzioni saranno aggiunte dinamicamente -->
-        </datalist>
-        <br>
-        
-        
-
-    </form>
-
-    <br>
-    <br>
-    <br>
+        <div id="map"></div>
+    </div>
     
-     <!-- Mappa -->  
-    <div id="map"></div>
-        
-        
-        
-    
-    
--
-    
-    <h2>Risultato:</h2>
-    <pre id="output">Premi un pulsante per visualizzare il risultato.</pre>
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="main.js"></script>
 </body>
 </html>
