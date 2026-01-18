@@ -80,8 +80,11 @@ function aggiornaProvince() {
         comune => comune.regione.nome === regioneSelezionata
     );
     
-    // Estrai province (nome)
-    const province = [...new Set(comuniRegione.map(comune => comune.provincia.nome))];
+    // Estrai province (nome) - correzione: accesso sicuro all'oggetto provincia
+    const province = [...new Set(comuniRegione
+        .filter(comune => comune.provincia && comune.provincia.nome)
+        .map(comune => comune.provincia.nome)
+    )];
     
     // Ordina
     province.sort();
@@ -110,9 +113,9 @@ function aggiornaComuni() {
     
     if (!provinciaSelezionata) return;
     
-    // Filtra comuni per provincia
+    // Filtra comuni per provincia - con controllo sicuro
     comuniProvincia = tuttiIComuni.filter(
-        comune => comune.provincia.nome === provinciaSelezionata
+        comune => comune.provincia && comune.provincia.nome === provinciaSelezionata
     );
     
     // Ordina comuni alfabeticamente
@@ -180,11 +183,22 @@ async function selezionaComune() {
             })
         });
         
-        // Crea contenuto popup con meteo
+        // Crea contenuto popup con meteo - GRAFICA ORIGINALE
         const popupContent = creaContenutoPopup(comune, coordinate, meteoAttuale);
         
-        // Aggiungi popup al marker
-        markerComuneSelezionato.bindPopup(popupContent);
+        // Crea il popup con opzioni per evitare tagli
+        const popup = L.popup({
+            maxWidth: 300,
+            minWidth: 250,
+            maxHeight: 350,
+            autoPan: true,
+            autoPanPadding: [50, 50],
+            closeButton: true,
+            className: 'popup-meteo-originale'
+        }).setContent(popupContent);
+        
+        // Associa il popup al marker
+        markerComuneSelezionato.bindPopup(popup);
         
         // Aggiungi marker alla mappa
         markerComuneSelezionato.addTo(markerLayer);
@@ -197,26 +211,25 @@ async function selezionaComune() {
     }
 }
 
-// Funzione per creare il contenuto del popup
+// Funzione per creare il contenuto del popup - GRAFICA ORIGINALE
 function creaContenutoPopup(comune, coordinate, meteo) {
-    // Estrai nome provincia correttamente
+    // Estrai nome provincia correttamente - FIXED
     const nomeProvincia = comune.provincia ? comune.provincia.nome : 'N/A';
-    const siglaProvincia = comune.provincia ? comune.provincia.sigla : 'N/A';
     
     // Determina condizione meteo e icona
     const condizioneMeteo = getCondizioneMeteo(meteo);
     const iconaMeteo = getIconaMeteo(meteo);
     
     return `
-        <div style="text-align: center; padding: 15px; min-width: 200px;">
+        <div style="text-align: center; padding: 15px; min-width: 200px; max-width: 280px;">
             <div style="margin-bottom: 15px;">
                 <strong style="font-size: 18px; color: #333;">${comune.nome}</strong><br>
                 <span style="color: #666; font-size: 14px;">
-                    Provincia: ${nomeProvincia} (${siglaProvincia})
+                    Provincia: ${nomeProvincia}
                 </span>
             </div>
             
-            <div style="background-color: #f0f8ff; padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+            <div style="background-color: #f0f8ff; padding: 15px; border-radius: 8px; margin-bottom: 15px; border: 1px solid #d1e7ff;">
                 <div style="display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 10px;">
                     <span style="font-size: 28px;">${iconaMeteo}</span>
                     <div>

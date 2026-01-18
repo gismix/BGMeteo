@@ -93,3 +93,58 @@ th {
 tr:nth-child(even) {
     background-color: #f9f9f9;
 }
+
+/* Stili per il popup personalizzato */
+.leaflet-popup-content {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.leaflet-popup-content-wrapper {
+    border-radius: 10px !important;
+    padding: 5px !important;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2) !important;
+}
+
+.weather-icon {
+    font-size: 28px;
+    margin-right: 10px;
+}
+
+.weather-temp {
+    font-size: 24px;
+    font-weight: bold;
+    color: #0066cc;
+}
+
+.weather-condition {
+    font-size: 16px;
+    color: #333;
+    margin: 5px 0;
+}
+
+.weather-details {
+    font-size: 14px;
+    color: #666;
+}
+
+.comune-title {
+    font-size: 18px;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.provincia-info {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 15px;
+}
+
+.meteo-box {
+    background-color: #f0f8ff;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    border: 1px solid #d1e7ff;
+}
+
