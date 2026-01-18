@@ -93,3 +93,319 @@ th {
 tr:nth-child(even) {
     background-color: #f9f9f9;
 }
+
+/* Stili per il popup personalizzato */
+.leaflet-popup-content {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.leaflet-popup-content-wrapper {
+    border-radius: 10px !important;
+    padding: 5px !important;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2) !important;
+}
+
+.weather-icon {
+    font-size: 28px;
+    margin-right: 10px;
+}
+
+.weather-temp {
+    font-size: 24px;
+    font-weight: bold;
+    color: #0066cc;
+}
+
+.weather-condition {
+    font-size: 16px;
+    color: #333;
+    margin: 5px 0;
+}
+
+.weather-details {
+    font-size: 14px;
+    color: #666;
+}
+
+.comune-title {
+    font-size: 18px;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.provincia-info {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 15px;
+}
+
+.meteo-box {
+    background-color: #f0f8ff;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    border: 1px solid #d1e7ff;
+}
+
+/* Aggiungi queste regole al file style.css esistente */
+
+/* Stili per la pagina dettaglio */
+.meteo-attuale-card {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 15px;
+    padding: 25px;
+    color: white;
+    margin-bottom: 30px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.meteo-header {
+    margin-bottom: 20px;
+}
+
+.comune-info h2 {
+    margin: 0;
+    font-size: 28px;
+    font-weight: 700;
+}
+
+.data-ora {
+    margin: 5px 0 0 0;
+    opacity: 0.9;
+    font-size: 14px;
+}
+
+.meteo-main {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.temperatura-section {
+    text-align: center;
+}
+
+.icona-temperatura {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+
+.icona-grande {
+    font-size: 60px;
+}
+
+.temperatura-valore {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.temperatura {
+    font-size: 48px;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.condizione {
+    font-size: 18px;
+    opacity: 0.95;
+    margin-top: 5px;
+}
+
+.meteo-dettagli {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+
+.dettaglio-box {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    background: rgba(255, 255, 255, 0.15);
+    padding: 15px 20px;
+    border-radius: 12px;
+    backdrop-filter: blur(10px);
+}
+
+.dettaglio-icon {
+    font-size: 24px;
+}
+
+.dettaglio-testo {
+    display: flex;
+    flex-direction: column;
+}
+
+.dettaglio-label {
+    font-size: 12px;
+    opacity: 0.8;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.dettaglio-valore {
+    font-size: 18px;
+    font-weight: 600;
+    margin-top: 2px;
+}
+
+/* Stili per la tabella previsioni */
+.previsioni {
+    background: white;
+    border-radius: 15px;
+    padding: 25px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+}
+
+.previsioni h2 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    color: #333;
+    font-size: 22px;
+    border-bottom: 2px solid #f0f0f0;
+    padding-bottom: 10px;
+}
+
+#tabellaPrevisioni {
+    width: 100%;
+    border: none;
+}
+
+#tabellaPrevisioni thead {
+    background: #f8f9fa;
+    border-radius: 10px;
+}
+
+#tabellaPrevisioni th {
+    background: #f8f9fa;
+    border: none;
+    font-weight: 600;
+    color: #555;
+    padding: 15px 10px;
+    text-transform: uppercase;
+    font-size: 12px;
+    letter-spacing: 1px;
+}
+
+#tabellaPrevisioni tbody tr {
+    border-bottom: 1px solid #f0f0f0;
+    transition: background-color 0.3s;
+}
+
+#tabellaPrevisioni tbody tr:hover {
+    background-color: #f9f9f9;
+}
+
+#tabellaPrevisioni td {
+    border: none;
+    padding: 15px 10px;
+    vertical-align: middle;
+}
+
+.giorno-data {
+    font-size: 14px;
+    color: #333;
+}
+
+.giorno-numero {
+    color: #666;
+    font-size: 13px;
+}
+
+.condizione-giorno {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.icona-giorno {
+    font-size: 24px;
+}
+
+.testo-condizione {
+    font-size: 14px;
+    color: #555;
+}
+
+.temperatura-cella {
+    font-size: 16px;
+    font-weight: 600;
+    text-align: center;
+}
+
+.temp-max {
+    color: #e74c3c;
+}
+
+.temp-min {
+    color: #3498db;
+}
+
+.precipitazioni-cella {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    justify-content: center;
+}
+
+.precip-icon {
+    font-size: 18px;
+}
+
+.precip-valore {
+    font-size: 14px;
+    color: #555;
+}
+
+.errore {
+    text-align: center;
+    padding: 40px;
+    background: #fff5f5;
+    border-radius: 10px;
+    color: #e74c3c;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .meteo-attuale-card {
+        padding: 20px;
+    }
+    
+    .icona-temperatura {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .temperatura-valore {
+        align-items: center;
+    }
+    
+    .meteo-dettagli {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .dettaglio-box {
+        width: 100%;
+        max-width: 200px;
+    }
+    
+    #tabellaPrevisioni {
+        display: block;
+        overflow-x: auto;
+    }
+    
+    .condizione-giorno {
+        flex-direction: column;
+        gap: 5px;
+    }
+    
+    .testo-condizione {
+        font-size: 12px;
+    }
+}
