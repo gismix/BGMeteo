@@ -20,7 +20,8 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // 3. Imposta event listener per le select
     document.getElementById('selectRegione').addEventListener('change', aggiornaProvince);
-    document.getElementById('selectProvincia').addEventListener('change', aggiornaMappa);
+    document.getElementById('selectProvincia').addEventListener('change', aggiornaComuni);
+    document.getElementById('selectComune').addEventListener('change', selezionaComune);
 });
 
 // Carica il file JSON dei comuni
@@ -60,9 +61,11 @@ function popolaRegioni() {
 function aggiornaProvince() {
     const regioneSelezionata = document.getElementById('selectRegione').value;
     const selectProvincia = document.getElementById('selectProvincia');
+    const selectComune = document.getElementById('selectComune');
     
-    // Reset
+    // Reset province e comuni
     selectProvincia.innerHTML = '<option value="">Seleziona una provincia...</option>';
+    selectComune.innerHTML = '<option value="">Seleziona un comune...</option>';
     comuniProvincia = [];
     markerLayer.clearLayers();
     
@@ -88,9 +91,13 @@ function aggiornaProvince() {
     });
 }
 
-// Aggiorna la mappa quando cambia la provincia
-async function aggiornaMappa() {
+// Aggiorna i comuni quando cambia la provincia
+async function aggiornaComuni() {
     const provinciaSelezionata = document.getElementById('selectProvincia').value;
+    const selectComune = document.getElementById('selectComune');
+    
+    // Reset comuni
+    selectComune.innerHTML = '<option value="">Seleziona un comune...</option>';
     
     if (!provinciaSelezionata) return;
     
@@ -99,8 +106,27 @@ async function aggiornaMappa() {
         comune => comune.provincia.nome === provinciaSelezionata
     );
     
+    // Ordina comuni alfabeticamente
+    comuniProvincia.sort((a, b) => a.nome.localeCompare(b.nome));
+    
+    // Popola select comune
+    comuniProvincia.forEach(comune => {
+        const option = document.createElement('option');
+        option.value = comune.nome;
+        option.textContent = comune.nome;
+        selectComune.appendChild(option);
+    });
+    
+    // Aggiorna la mappa con tutti i comuni della provincia
+    await aggiornaMappaProvincia();
+}
+
+// Aggiorna la mappa con tutti i comuni della provincia
+async function aggiornaMappaProvincia() {
     // Pulisci marker precedenti
     markerLayer.clearLayers();
+    
+    if (comuniProvincia.length === 0) return;
     
     // Aggiungi marker per ogni comune
     const bounds = L.latLngBounds([]);
@@ -138,6 +164,39 @@ async function aggiornaMappa() {
     }
 }
 
+// Quando si seleziona un comune specifico
+async function selezionaComune() {
+    const comuneSelezionato = document.getElementById('selectComune').value;
+    
+    if (!comuneSelezionato) return;
+    
+    // Trova il comune nell'array
+    const comune = comuniProvincia.find(c => c.nome === comuneSelezionato);
+    
+    if (!comune) return;
+    
+    // Ottieni coordinate
+    const coordinate = await getCoordinateComune(comune);
+    
+    if (coordinate) {
+        // Centra la mappa sul comune selezionato
+        mappa.setView([coordinate.lat, coordinate.lng], 10);
+        
+        // Apri automaticamente il popup del marker
+        // Per fare questo dobbiamo trovare il marker corretto
+        markerLayer.eachLayer(function(layer) {
+            const markerLat = layer.getLatLng().lat;
+            const markerLng = layer.getLatLng().lng;
+            
+            // Confronta approssimativamente le coordinate
+            if (Math.abs(markerLat - coordinate.lat) < 0.01 && 
+                Math.abs(markerLng - coordinate.lng) < 0.01) {
+                layer.openPopup();
+            }
+        });
+    }
+}
+
 // Ottieni coordinate da Open-Meteo
 async function getCoordinateComune(comune) {
     try {
@@ -149,11 +208,25 @@ async function getCoordinateComune(comune) {
         if (data.results && data.results.length > 0) {
             return {
                 lat: data.results[0].latitude,
-                lng: data.results[0].longitude
+                lng: data.results[0].longitude,
+                comune: comune
             };
         }
     } catch (error) {
         console.error(`Errore coordinate per ${comune.nome}:`, error);
     }
     return null;
+}
+
+// Funzione per popolare direttamente la select comune (opzionale)
+function popolaSelectComune(comuni) {
+    const selectComune = document.getElementById('selectComune');
+    selectComune.innerHTML = '<option value="">Seleziona un comune...</option>';
+    
+    comuni.forEach(comune => {
+        const option = document.createElement('option');
+        option.value = comune.nome;
+        option.textContent = comune.nome;
+        selectComune.appendChild(option);
+    });
 }
