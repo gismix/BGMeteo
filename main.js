@@ -352,9 +352,9 @@ function getIconaMeteo(meteo) {
     if (codice >= 51 && codice <= 67) return '🌧️'; // Pioggia
     if (codice >= 71 && codice <= 77) return '❄️'; // Neve
     if (codice >= 80 && codice <= 81) return '🌦️'; // Rovesci
-    if (codice >= 85 && codice <= 86) return './img/icons/nevischio.png'; //neve ista pioggia
+    if (codice >= 85 && codice <= 86) return './src/img/icons/nevischio.png'; //neve ista pioggia
     if (codice == 95 || codice == 82) return '⛈️'; // Temporale
-    if (codice >= 96 && codice <= 99) return './img/icons/nevischio.png'; //grandine
+    if (codice >= 96 && codice <= 99) return './src/img/icons/nevischio.png'; //grandine
     
     return '☀️';
 }
