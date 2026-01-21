@@ -1,0 +1,330 @@
+/* Stili specifici per la pagina di dettaglio */
+.dettaglio-container {
+    max-width: 1200px;
+    padding: 20px;
+    animation: fadeIn 0.5s ease-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Stile per il link di ritorno */
+.back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: #3498db;
+    text-decoration: none;
+    font-weight: 600;
+    padding: 12px 20px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    margin-bottom: 25px;
+    transition: all 0.3s ease;
+    border: 1px solid #e9ecef;
+}
+
+.back-link:hover {
+    background-color: #3498db;
+    color: white;
+    transform: translateX(-5px);
+}
+
+/* Header della pagina di dettaglio */
+.header-dettaglio {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid #f0f0f0;
+}
+
+.header-dettaglio h1 {
+    color: #2c3e50;
+    font-size: 2.2rem;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.header-dettaglio h1 i {
+    color: #3498db;
+}
+
+.last-update {
+    font-size: 0.9rem;
+    color: #7f8c8d;
+    background-color: #f8f9fa;
+    padding: 8px 15px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Card design */
+.card {
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+    margin-bottom: 30px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+}
+
+.card-header {
+    background: linear-gradient(135deg, #3498db, #2980b9);
+    color: white;
+    padding: 20px 25px;
+}
+
+.card-header h2 {
+    margin: 0;
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.card-content {
+    padding: 25px;
+}
+
+/* Stile per la sezione meteo attuale */
+#datiAttuali .loading-spinner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+    color: #7f8c8d;
+    text-align: center;
+}
+
+.spinner {
+    width: 50px;
+    height: 50px;
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #3498db;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 20px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Stile per la tabella delle previsioni */
+.table-container {
+    overflow-x: auto;
+    border-radius: 10px;
+    border: 1px solid #f0f0f0;
+}
+
+#tabellaPrevisioni {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 700px;
+}
+
+#tabellaPrevisioni thead {
+    background: linear-gradient(135deg, #2c3e50, #34495e);
+    color: white;
+}
+
+#tabellaPrevisioni th {
+    padding: 18px 15px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 1rem;
+    white-space: nowrap;
+}
+
+#tabellaPrevisioni tbody tr {
+    border-bottom: 1px solid #f0f0f0;
+    transition: background-color 0.2s ease;
+}
+
+#tabellaPrevisioni tbody tr:hover {
+    background-color: #f8fafc;
+}
+
+#tabellaPrevisioni tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+#tabellaPrevisioni tbody tr:nth-child(even):hover {
+    background-color: #f0f7ff;
+}
+
+#tabellaPrevisioni td {
+    padding: 18px 15px;
+    color: #333;
+    font-size: 1rem;
+}
+
+/* Stile per la riga di caricamento della tabella */
+.table-loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 30px;
+    color: #7f8c8d;
+}
+
+.table-loading .spinner.small {
+    width: 30px;
+    height: 30px;
+    margin-bottom: 15px;
+}
+
+/* Stili per condizioni meteo specifiche nella tabella */
+.condizione-cell {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.condizione-sole {
+    color: #f39c12;
+}
+
+.condizione-nuvoloso {
+    color: #7f8c8d;
+}
+
+.condizione-pioggia {
+    color: #3498db;
+}
+
+.condizione-neve {
+    color: #1abc9c;
+}
+
+/* Stili per le temperature */
+.temp-max {
+    color: #e74c3c;
+    font-weight: 600;
+}
+
+.temp-min {
+    color: #3498db;
+    font-weight: 600;
+}
+
+/* Stile per precipitazioni */
+.precipitazioni {
+    color: #2980b9;
+    font-weight: 600;
+}
+
+/* Stile per i dati attuali quando sono popolati */
+.dati-attuali-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 25px;
+}
+
+.dato-meteo {
+    background-color: #f8fafc;
+    padding: 20px;
+    border-radius: 12px;
+    border-left: 4px solid #3498db;
+    transition: transform 0.3s ease;
+}
+
+.dato-meteo:hover {
+    transform: translateY(-3px);
+}
+
+.dato-meteo h3 {
+    color: #2c3e50;
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.dato-meteo .valore {
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: #2c3e50;
+}
+
+.dato-meteo .unita {
+    color: #7f8c8d;
+    font-size: 1rem;
+    margin-left: 5px;
+}
+
+.dato-meteo .descrizione {
+    color: #5a6c7d;
+    font-size: 0.95rem;
+    margin-top: 5px;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .dettaglio-container {
+        padding: 15px;
+    }
+    
+    .header-dettaglio {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .header-dettaglio h1 {
+        font-size: 1.8rem;
+    }
+    
+    .card-header h2 {
+        font-size: 1.3rem;
+    }
+    
+    .card-content {
+        padding: 20px 15px;
+    }
+    
+    #tabellaPrevisioni th, 
+    #tabellaPrevisioni td {
+        padding: 14px 10px;
+    }
+    
+    .dati-attuali-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .header-dettaglio h1 {
+        font-size: 1.5rem;
+    }
+    
+    .back-link {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    #tabellaPrevisioni th, 
+    #tabellaPrevisioni td {
+        padding: 12px 8px;
+        font-size: 0.9rem;
+    }
+}

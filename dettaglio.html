@@ -5,35 +5,58 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BGMeteo - Dettaglio</title>
     <link rel="icon" type="image/x-icon" href="src/img/logo/BGMeteo-Compact-Dark.ico">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="dettaglio-style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <div class="container">
-        <a href="index.html" class="back-link">← Torna alla mappa</a>
-        <h1 id="titoloComune">Dettaglio Meteo</h1>
+    <div class="container dettaglio-container">
+        <a href="index.html" class="back-link">
+            <i class="fas fa-arrow-left"></i> Torna alla mappa
+        </a>
         
-        <div class="meteo-attuale">
-            <div id="datiAttuali">
-                <p>Caricamento...</p>
+        <div class="header-dettaglio">
+            <h1 id="titoloComune">
+                <i class="fas fa-location-dot"></i> Dettaglio Meteo
+            </h1>
+            <div class="last-update">
+                <span id="ultimoAggiornamento"></span>
             </div>
         </div>
         
-        <div class="previsioni">
-            <h2>Previsioni 5 giorni</h2>
-            <table id="tabellaPrevisioni">
-                <thead>
-                    <tr>
-                        <th>Data</th>
-                        <th>Condizione</th>
-                        <th>Max (°C)</th>
-                        <th>Min (°C)</th>
-                        <th>Precipitazioni (mm)</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- Verrà popolato via JavaScript -->
-                </tbody>
-            </table>
+        <div class="meteo-attuale card">
+            <div class="card-header">
+                <h2><i class="fas fa-sun"></i> Meteo Attuale</h2>
+            </div>
+            <div id="datiAttuali" class="card-content">
+                <div class="loading-spinner">
+                    <div class="spinner"></div>
+                    <p>Caricamento dati meteo...</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="previsioni card">
+            <div class="card-header">
+                <h2><i class="fas fa-calendar-alt"></i> Previsioni 5 giorni</h2>
+            </div>
+            <div class="card-content">
+                <div class="table-container">
+                    <table id="tabellaPrevisioni">
+                        <thead>
+                            <tr>
+                                <th><i class="far fa-calendar"></i> Data</th>
+                                <th><i class="fas fa-cloud"></i> Condizione</th>
+                                <th><i class="fas fa-temperature-high"></i> Max (°C)</th>
+                                <th><i class="fas fa-temperature-low"></i> Min (°C)</th>
+                                <th><i class="fas fa-tint"></i> Precipitazioni (mm)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Verrà popolato via JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
     
