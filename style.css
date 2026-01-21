@@ -19,12 +19,40 @@ body {
 /* Header styles */
 header {
     background: linear-gradient(135deg, #031f4a, #2bbcedce, rgb(4, 64, 61));
+    border-radius: 0 0 20px 20px !important; 
+    margin-bottom: 20px;
+    background-size: 400% 400% !important; 
+    animation: gradientMove 15s ease infinite !important;
+    transition: all 0.5s ease !important;
 }
 
-header h1 {
+
+header h2 {
     font-weight: 700;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
 }
+
+header .container {
+    transition: transform 0.3s ease-in-out;
+}
+
+
+header:hover .container {
+    transform: scale(1.1);
+}
+/*keyframe ch permettono al gradiente dell'header di muoversi*/
+@keyframes gradientMove {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
 
 .subtitle {
     color: black;
@@ -136,6 +164,23 @@ a:active {
 footer {
     margin-top: auto;
     background: linear-gradient(135deg, #031f4a, #2bbcedce, rgb(4, 64, 61));
+    border-radius: 20px 20px 0px 0px !important;
+    background-size: 400% 400% !important; 
+    animation: gradientMove 15s ease infinite !important;
+    transition: all 0.5s ease !important;
+    
+}
+/*keyframe ch permettono al gradiente del footer di muoversi*/
+@keyframes gradientMove {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
 }
 
 /* Loading state for selects */
