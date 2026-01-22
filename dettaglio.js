@@ -1,3 +1,9 @@
+
+
+/* 
+ * Al caricamento della pagina vengono create delle varibili per la lettura dei parametri della url
+ * Successivamente viene aggiornato il titolo dopo opportuna verifica eviene chiamara la API del meteo per verificare eventuali errori
+*/
 document.addEventListener('DOMContentLoaded', async function() {
     // Leggi parametri dalla URL
     const urlParams = new URLSearchParams(window.location.search);
@@ -28,7 +34,12 @@ document.addEventListener('DOMContentLoaded', async function() {
     }
 });
 
-// Ottieni dati meteo da Open-Meteo
+
+/* 
+ * Questa funzione richiama l'API di Open-meteo per ottenre un json contenete le 
+ *  informazioni meteo di una latitudine e longitudine specificata
+*/
+
 async function getMeteoData(lat, lon) {
     const response = await fetch(
         `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,wind_speed_10m,weather_code,relative_humidity_2m&daily=temperature_2m_max,temperature_2m_min,precipitation_sum,weather_code&timezone=auto`
@@ -157,11 +168,14 @@ function mostraDatiMeteo(nomeComune, data) {
     }
 }
 
-// Converti codice meteo in descrizione testuale (stessa del main.js)
+
+/*
+ * Funzione che permette di trasformare il codice del meteo in descizione testuale
+*/
 function getCondizioneMeteo(codiceMeteo) {
     if (codiceMeteo === undefined || codiceMeteo === null) return 'Dati non disponibili';
     
-    // Tabella conversione codici WMO Weather Interpretation Codes
+    // Tabella conversione codici
     const condizioni = {
         0: 'Sereno',
         1: 'Prevalentemente sereno',
@@ -196,7 +210,9 @@ function getCondizioneMeteo(codiceMeteo) {
     return condizioni[codiceMeteo] || 'Condizioni non definite';
 }
 
-// Ottieni icona meteo in base al codice (stessa del main.js)
+/*
+ * Funzione analoga al main.js che coverte il codice meteo precedenemente ottenuto in icona
+*/
 function getIconaMeteo(codiceMeteo) {
     if (codiceMeteo === undefined || codiceMeteo === null) return '☀️';
     
@@ -207,8 +223,10 @@ function getIconaMeteo(codiceMeteo) {
     if (codiceMeteo >= 45 && codiceMeteo <= 48) return '🌫️'; // Nebbia
     if (codiceMeteo >= 51 && codiceMeteo <= 67) return '🌧️'; // Pioggia
     if (codiceMeteo >= 71 && codiceMeteo <= 77) return '❄️'; // Neve
-    if (codiceMeteo >= 80 && codiceMeteo <= 86) return '🌦️'; // Rovesci
-    if (codiceMeteo >= 95 && codiceMeteo <= 99) return '⛈️'; // Temporale
+    if (codiceMeteo >= 80 && codiceMeteo <= 81) return '🌦️'; // Rovesci
+    if (codiceMeteo >= 85 && codiceMeteo <= 86) return './src/img/icons/nevischio.png'; //neve ista pioggia
+    if (codiceMeteo == 95 || codiceMeteo == 82) return '⛈️'; // Temporale
+    if (codiceMeteo >= 96 && codiceMeteo <= 99) return './src/img/icons/nevischio.png'; //grandine
     
     return '☀️';
 }

@@ -297,30 +297,8 @@ body {
     margin-top: 5px;
 }
 
-/* Footer styles */
-footer {
-    margin-top: auto;
-    background: linear-gradient(135deg, #031f4a, #2bbcedce, rgb(4, 64, 61));
-    border-radius: 20px 20px 0px 0px !important;
-    background-size: 400% 400% !important; 
-    animation: gradientMove 15s ease infinite !important;
-    transition: all 0.5s ease !important;
-    
-}
-/*keyframe ch permettono al gradiente del footer di muoversi*/
-@keyframes gradientMove {
-    0% {
-        background-position: 0% 50%;
-    }
-    50% {
-        background-position: 100% 50%;
-    }
-    100% {
-        background-position: 0% 50%;
-    }
-}
 
-/* Responsive design */
+/* responsive */
 @media (max-width: 768px) {
     .dettaglio-container {
         padding: 15px;

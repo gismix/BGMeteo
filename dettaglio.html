@@ -10,10 +10,13 @@
 </head>
 <body>
     <div class="container dettaglio-container">
+        
+        <!-- pulsante per tornare -->
         <a href="index.html" class="back-link">
             <i class="fas fa-arrow-left"></i> Torna alla mappa
         </a>
         
+        <!-- TITOLO -->
         <div class="header-dettaglio">
             <h1 id="titoloComune">
                 <i class="fas fa-location-dot"></i> Dettaglio Meteo
@@ -22,7 +25,8 @@
                 <span id="ultimoAggiornamento"></span>
             </div>
         </div>
-        
+     
+        <!-- dettagli meteo attuali -->
         <div class="meteo-attuale card">
             <div class="card-header">
                 <h2><i class="fas fa-sun"></i> Meteo Attuale</h2>
@@ -35,6 +39,7 @@
             </div>
         </div>
         
+        <!-- dettagli previsioni -->
         <div class="previsioni card">
             <div class="card-header">
                 <h2><i class="fas fa-calendar-alt"></i> Previsioni 5 giorni</h2>
@@ -52,23 +57,13 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <!-- Verrà popolato via JavaScript -->
+                            <!-- popolato con JavaScript -->
                         </tbody>
                     </table>
                 </div>
             </div>
         </div>
-        <!-- Footer 
-        <footer class="bg-dark text-white py-3 mt-4">
-            <div class="container">
-                <div class="row">
-                    <div class="col-12 text-center">
-                        <p class="mb-0">BGMeteo &copy; 2025 - Previsioni Meteo in Tempo Reale</p>
-                        <p class="mb-0">Contattaci - <a href="mailto:bgmeteo@libero.it">BGMeteo@libero.it</a></p>
-                    </div>
-                </div>
-            </div>
-        </footer>-->
+        
     </div>
     
     <script src="dettaglio.js"></script>

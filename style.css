@@ -1,6 +1,6 @@
-/* Custom styles for BGMeteo */
 
-/* General styles */
+
+/* stile generale */
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: #f8f9fa;
@@ -16,7 +16,7 @@ body {
     flex-direction: column;
 }
 
-/* Header styles */
+/* stile header */
 header {
     background: linear-gradient(135deg, #031f4a, #2bbcedce, rgb(4, 64, 61));
     border-radius: 0 0 20px 20px !important; 
@@ -60,7 +60,7 @@ header:hover .container {
     letter-spacing: 0.5px;
 }
 
-/* Form controls */
+/* stile della form */
 .form-group {
     margin-bottom: 0;
 }
@@ -85,7 +85,7 @@ header:hover .container {
     margin-bottom: 0.5rem;
 }
 
-/* Card styles */
+/* stile delle card */
 .card {
     border-radius: 10px;
     overflow: hidden;
@@ -96,7 +96,7 @@ header:hover .container {
     font-weight: 600;
 }
 
-/* Map styles */
+/* impostzioni stile mappa */
 #map {
     height: 500px;
     width: 100%;
@@ -104,7 +104,7 @@ header:hover .container {
     z-index: 1;
 }
 
-/* Responsive adjustments */
+/* responsive */
 @media (max-width: 768px) {
     .controls-section .row > div {
         margin-bottom: 1rem;
@@ -137,7 +137,7 @@ header:hover .container {
     }
 }
 
-/*styles links*/
+/*stile dei link*/
 a:link {
   color: white;
   background-color: transparent;
@@ -160,7 +160,7 @@ a:active {
 }
 
 
-/* Footer styles */
+/* stile del footer */
 footer {
     margin-top: auto;
     background: linear-gradient(135deg, #031f4a, #2bbcedce, rgb(4, 64, 61));

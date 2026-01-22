@@ -201,8 +201,7 @@ async function selezionaComune() {
         });
         
 
-        //no allora il select dei preferiti veve essere giusto un quadratino con una stella gialla alltinterno a destra dei selct attuali e questo nuovo select deve comparire solo nel caso in cui ci sia uno o piu preferiti (tipo quando ci sono dei preferiti il select si restrinono leggermente per far spazio al nuovo select restando a filo lagraghezza mappa) in pui aggiungi la stellina clickabile nella prima card del dettaglio dove ci sono le informazini attuali del meteo, utilizza localStorage
-        // Crea contenuto popup con meteo - GRAFICA ORIGINALE
+        // Crea contenuto popup con meteo 
         const popupContent = creaContenutoPopup(comune, coordinate, meteoAttuale);
         
         // Crea il popup con opzioni per evitare tagli
