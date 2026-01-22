@@ -1,4 +1,14 @@
 /* Stili specifici per la pagina di dettaglio */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f8f9fa;
+    text-align: center;
+    color: #333;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
 .dettaglio-container {
     max-width: 1200px;
     padding: 20px;
