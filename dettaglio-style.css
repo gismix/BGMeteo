@@ -12,6 +12,7 @@ body {
 .dettaglio-container {
     max-width: 1200px;
     padding: 20px;
+    margin: 0px auto;
     animation: fadeIn 0.5s ease-out;
 }
 
