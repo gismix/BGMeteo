@@ -13,6 +13,16 @@ document.addEventListener('DOMContentLoaded', function() {
     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; OpenStreetMap contributors'
     }).addTo(mappa);
+
+    //1.1 Aggiunta marker custom
+    const markerCustom = L.icon({
+        iconUrl: 'src/img/icons/pin.png',
+    
+        iconSize:     [38, 95], // size of the icon
+        shadowSize:   [50, 64], // size of the shadow
+        iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
+        popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+    });
     
     markerLayer.addTo(mappa);
     
@@ -129,11 +139,11 @@ function aggiornaComuni() {
         selectComune.appendChild(option);
     });
     
-    // Centra la mappa sulla provincia (opzionale)
+    // Centra la mappa sulla provincia 
     centraMappaSullaProvincia(provinciaSelezionata);
 }
 
-// Funzione per centrare la mappa sulla provincia (posizione approssimativa)
+// Funzione per centrare la mappa sulla provincia (approssimata)
 async function centraMappaSullaProvincia(provincia) {
     // Prendiamo il primo comune della provincia per avere coordinate approssimative
     if (comuniProvincia.length > 0) {
@@ -173,11 +183,11 @@ async function selezionaComune() {
         // Crea marker solo per il comune selezionato
         markerComuneSelezionato = L.marker([coordinate.lat, coordinate.lng], {
             icon: L.icon({
-                iconUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
+                iconUrl: 'src/img/icons/pin.png',
                 iconRetinaUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png',
                 shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
-                iconSize: [25, 41],
-                iconAnchor: [12, 41],
+                iconSize: [41, 41],
+                iconAnchor: [19, 41],
                 popupAnchor: [1, -34],
                 shadowSize: [41, 41]
             })
