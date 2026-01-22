@@ -16,22 +16,21 @@ document.addEventListener('DOMContentLoaded', function() {
         attribution: '&copy; OpenStreetMap contributors'
     }).addTo(mappa);
 
-    //1.1 Aggiunta marker custom
+    // Marker
     const markerCustom = L.icon({
         iconUrl: 'src/img/icons/pin.png',
     
-        iconSize:     [38, 95], // size of the icon
-        shadowSize:   [50, 64], // size of the shadow
-        iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
-        popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+        iconSize:     [38, 95], // Grandezza Marker
+        shadowSize:   [50, 64], // Obra Marker
+        iconAnchor:   [22, 94], // Posizione Marker
+        popupAnchor:  [-3, -76] // Posizione Pop-Up
     });
-    
     markerLayer.addTo(mappa);
     
     // Caricamento Comuni Iniziale
     caricaComuni();
     
-    // 3. Event Listener - Regione, Provincia, Comune
+    // Event Listener - Regione, Provincia, Comune
     document.getElementById('selectRegione').addEventListener('change', aggiornaProvince);
     document.getElementById('selectProvincia').addEventListener('change', aggiornaComuni);
     document.getElementById('selectComune').addEventListener('change', selezionaComune);
@@ -39,8 +38,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 //  COMUNI
 /* Il metodo caricaComuni restituisce una lista di comuni italiani in formato JSON dalla repository GitHub.
-    Viene poi invocato il metodo popolaRegioni (Leggi Successivo).
-*/
+   Viene poi invocato il metodo popolaRegioni.*/
 async function caricaComuni() {
     try {
         const response = await fetch('https://raw.githubusercontent.com/matteocontrini/comuni-json/master/comuni.json');
@@ -55,19 +53,18 @@ async function caricaComuni() {
 }
 
 // REGIONI
-/* Il metodo popolaRegioni estra dalla lista tuttiIComuni i nomi delle regioni italiane, ordinandole alfabeticamente, per poi
-    aggiungerle al select delle regioni.
-*/
+/* Il metodo popolaRegioni estrae dalla lista tuttiIComuni i nomi delle regioni italiane, ordinandole alfabeticamente, per poi
+    aggiungerle al select delle regioni.*/
 function popolaRegioni() {
     const selectRegione = document.getElementById('selectRegione');
     
-    // Estrai nomi regione (eliminando duplicati)
+    // Lista regioni riempita con i nome delle Regioni
     const regioni = [...new Set(tuttiIComuni.map(comune => comune.regione.nome))];
     
-    // Ordina alfabeticamente
+    // Ordina la lista 
     regioni.sort();
     
-    // Aggiungi opzioni alla select
+    // Aggiorna Select Regioni
     regioni.forEach(regione => {
         const option = document.createElement('option');
         option.value = regione;
@@ -76,18 +73,19 @@ function popolaRegioni() {
     });
 }
 
-// Aggiorna le province quando cambia la regione
+// PROVINCIA
+/* Il metodo aggiornaProvince aggiorna le Province in base alla Regione selezionata
+*/
 function aggiornaProvince() {
     const regioneSelezionata = document.getElementById('selectRegione').value;
     const selectProvincia = document.getElementById('selectProvincia');
     const selectComune = document.getElementById('selectComune');
     
-    // Reset province e comuni
-    selectProvincia.innerHTML = '<option value="">Seleziona una provincia...</option>';
-    selectComune.innerHTML = '<option value="">Seleziona un comune...</option>';
+    // Reset Iniziale
+    selectProvincia.innerHTML = '<option value="">Provincia</option>';
+    selectComune.innerHTML = '<option value="">Comune</option>';
     comuniProvincia = [];
     
-    // Rimuovi tutti i marker
     markerLayer.clearLayers();
     markerComuneSelezionato = null;
     
@@ -98,16 +96,16 @@ function aggiornaProvince() {
         comune => comune.regione.nome === regioneSelezionata
     );
     
-    // Estrai province (nome) - correzione: accesso sicuro all'oggetto provincia
+    // Lista province riempita con i nomi delle Province
     const province = [...new Set(comuniRegione
         .filter(comune => comune.provincia && comune.provincia.nome)
         .map(comune => comune.provincia.nome)
     )];
     
-    // Ordina
+    // Ordina la lista
     province.sort();
     
-    // Popola select provincia
+    // Aggiorna Select Provincia
     province.forEach(provincia => {
         const option = document.createElement('option');
         option.value = provincia;
@@ -116,30 +114,30 @@ function aggiornaProvince() {
     });
 }
 
-// Aggiorna i comuni quando cambia la provincia
+// COMUNI
+/* Il metodo aggiornaComuni aggiorna i Comuni in base alla Provincia selezionata */
 function aggiornaComuni() {
     const provinciaSelezionata = document.getElementById('selectProvincia').value;
     const selectComune = document.getElementById('selectComune');
     
-    // Reset comuni
-    selectComune.innerHTML = '<option value="">Seleziona un comune...</option>';
+    // Reset Iniziale
+    selectComune.innerHTML = '<option value="">Comune</option>';
     comuniProvincia = [];
-    
-    // Rimuovi tutti i marker
+
     markerLayer.clearLayers();
     markerComuneSelezionato = null;
     
     if (!provinciaSelezionata) return;
     
-    // Filtra comuni per provincia - con controllo sicuro
+    // lista comune riempita con i nomi dei Comuni
     comuniProvincia = tuttiIComuni.filter(
         comune => comune.provincia && comune.provincia.nome === provinciaSelezionata
     );
     
-    // Ordina comuni alfabeticamente
+    // Ordina Lista
     comuniProvincia.sort((a, b) => a.nome.localeCompare(b.nome));
     
-    // Popola select comune
+    // Aggiorna Select Comuni
     comuniProvincia.forEach(comune => {
         const option = document.createElement('option');
         option.value = comune.nome;
@@ -147,13 +145,14 @@ function aggiornaComuni() {
         selectComune.appendChild(option);
     });
     
-    // Centra la mappa sulla provincia 
+    // Imposta la Mappa alla Posizione del Comune Selezionato
     centraMappaSullaProvincia(provinciaSelezionata);
 }
 
-// Funzione per centrare la mappa sulla provincia (approssimata)
+// POSIZIONE MAPPA
+/* Il Metodo centraMappaSullaProvincia permette di centrare la Mappa sulla posizione della Provincia selezionata*/
 async function centraMappaSullaProvincia(provincia) {
-    // Prendiamo il primo comune della provincia per avere coordinate approssimative
+
     if (comuniProvincia.length > 0) {
         const coordinate = await getCoordinateComune(comuniProvincia[0]);
         if (coordinate) {
@@ -162,33 +161,33 @@ async function centraMappaSullaProvincia(provincia) {
     }
 }
 
-// Quando si seleziona un comune specifico
+// POSIZIONE MAPPA - 2
+/* Il metodo selezionaComune permette di centrare la Mappa sulla posizione esatta del Comune selezionato */
 async function selezionaComune() {
     const comuneSelezionato = document.getElementById('selectComune').value;
     
     if (!comuneSelezionato) {
-        // Se nessun comune selezionato, rimuovi tutti i marker
+        // Reset (se nessun Comune è stato selezionato)
         markerLayer.clearLayers();
         markerComuneSelezionato = null;
         return;
     }
     
-    // Trova il comune nell'array
     const comune = comuniProvincia.find(c => c.nome === comuneSelezionato);
     
     if (!comune) return;
     
-    // Ottieni coordinate
+    // Cordinate del Comune
     const coordinate = await getCoordinateComune(comune);
     
     if (coordinate) {
-        // Ottieni dati meteo attuali
+        // Meteo Attuale del Comune
         const meteoAttuale = await getMeteoAttuale(coordinate.lat, coordinate.lng);
         
-        // Rimuovi tutti i marker precedenti
+        // Reset 
         markerLayer.clearLayers();
         
-        // Crea marker solo per il comune selezionato
+        // Marker dedicati al Comune selezionato
         markerComuneSelezionato = L.marker([coordinate.lat, coordinate.lng], {
             icon: L.icon({
                 iconUrl: 'src/img/icons/pin.png',
@@ -201,10 +200,11 @@ async function selezionaComune() {
         });
         
 
-        // Crea contenuto popup con meteo 
+        //no allora il select dei preferiti veve essere giusto un quadratino con una stella gialla alltinterno a destra dei selct attuali e questo nuovo select deve comparire solo nel caso in cui ci sia uno o piu preferiti (tipo quando ci sono dei preferiti il select si restrinono leggermente per far spazio al nuovo select restando a filo lagraghezza mappa) in pui aggiungi la stellina clickabile nella prima card del dettaglio dove ci sono le informazini attuali del meteo, utilizza localStorage
+        // Crea contenuto popup con meteo - GRAFICA ORIGINALE
         const popupContent = creaContenutoPopup(comune, coordinate, meteoAttuale);
         
-        // Crea il popup con opzioni per evitare tagli
+        // Caratteristiche del Pop-Up
         const popup = L.popup({
             maxWidth: 300,
             minWidth: 250,
@@ -215,26 +215,25 @@ async function selezionaComune() {
             className: 'popup-meteo-originale'
         }).setContent(popupContent);
         
-        // Associa il popup al marker
+        // Aggiunta Pop-Up alla Mappa
         markerComuneSelezionato.bindPopup(popup);
-        
-        // Aggiungi marker alla mappa
         markerComuneSelezionato.addTo(markerLayer);
-        
-        // Centra la mappa sul comune selezionato con zoom adeguato
+    
+        // Centra la posizione della Mappa dopo aver aggiunto il Pop-Up
         mappa.setView([coordinate.lat-7, coordinate.lng], 12);
         
-        // Apri automaticamente il popup
+        // Apertura Pop-Up
         markerComuneSelezionato.openPopup();
     }
 }
 
-// Funzione per creare il contenuto del popup 
+// CONTENUTO POP-UP
+/* Il metodo creaContenutoPopup crea il contenuto del Pop-Up*/
 function creaContenutoPopup(comune, coordinate, meteo) {
-    // Estrai nome provincia correttamente 
+    // Nome Provincia
     const nomeProvincia = comune.provincia ? comune.provincia.nome : 'N/A';
     
-    // Determina condizione meteo e icona
+    // Specifiche del Meteo Attuale
     const condizioneMeteo = getCondizioneMeteo(meteo);
     const iconaMeteo = getIconaMeteo(meteo);
     
@@ -273,7 +272,8 @@ function creaContenutoPopup(comune, coordinate, meteo) {
     `;
 }
 
-// Ottieni coordinate da Open-Meteo
+
+// Il metodo getCordinateComune restituisce le coordinate del Comune Selezionato tramite l' API Open Meteo
 async function getCoordinateComune(comune) {
     try {
         const response = await fetch(
@@ -294,7 +294,7 @@ async function getCoordinateComune(comune) {
     return null;
 }
 
-// Ottieni meteo attuale da Open-Meteo
+// Il metodo getMeteoAttuale restituisce il condizioni meteo attuali del Comune selezionato sempre tramite l' API di Open Meteo
 async function getMeteoAttuale(lat, lon) {
     try {
         const response = await fetch(
@@ -315,13 +315,12 @@ async function getMeteoAttuale(lat, lon) {
     return null;
 }
 
-// Converti codice meteo in descrizione testuale
+// Il metodo getCondioneMeteo è utilizzato per assegnare ad ogni condizione meteo un' Icona
 function getCondizioneMeteo(meteo) {
     if (!meteo || !meteo.codiceMeteo) return 'Dati non disponibili';
     
     const codice = meteo.codiceMeteo;
     
-    // Tabella conversione codici WMO Weather Interpretation Codes
     const condizioni = {
         0: 'Sereno',
         1: 'Prevalentemente sereno',
@@ -356,13 +355,13 @@ function getCondizioneMeteo(meteo) {
     return condizioni[codice] || 'Condizioni non definite';
 }
 
-// Ottieni icona meteo in base al codice (emoji)
+// Il metodo getIconaMeteo restituisce l' Icona in base al codice restituito dalla funzione precedente
 function getIconaMeteo(meteo) {
     if (!meteo || !meteo.codiceMeteo) return '☀️';
     
     const codice = meteo.codiceMeteo;
     
-    // Icone emoji per diverse condizioni
+    //  Gestione Icone
     if (codice === 0 || codice === 1) return '☀️'; // Sereno
     if (codice === 2) return '⛅'; // Parzialmente nuvoloso
     if (codice === 3) return '☁️'; // Nuvoloso
