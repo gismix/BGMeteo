@@ -1,13 +1,15 @@
-// Variabili globali
+
+
+// Variabili Globali
 let tuttiIComuni = [];
 let mappa;
 let markerLayer = L.layerGroup();
 let comuniProvincia = [];
 let markerComuneSelezionato = null;
 
-// Inizializza tutto quando la pagina è pronta
+// Inizializzazione Pagina
 document.addEventListener('DOMContentLoaded', function() {
-    // 1. Inizializza la mappa
+    // Mappa OpenStreetMap (Leaflet)
     mappa = L.map('map').setView([42.5, 12.5], 6);
     
     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -16,16 +18,19 @@ document.addEventListener('DOMContentLoaded', function() {
     
     markerLayer.addTo(mappa);
     
-    // 2. Carica i comuni
+    // Caricamento Comuni Iniziale
     caricaComuni();
     
-    // 3. Imposta event listener per le select
+    // 3. Event Listener - Regione, Provincia, Comune
     document.getElementById('selectRegione').addEventListener('change', aggiornaProvince);
     document.getElementById('selectProvincia').addEventListener('change', aggiornaComuni);
     document.getElementById('selectComune').addEventListener('change', selezionaComune);
 });
 
-// Carica il file JSON dei comuni
+//  COMUNI
+/* Il metodo caricaComuni restituisce una lista di comuni italiani in formato JSON dalla repository GitHub.
+    Viene poi invocato il metodo popolaRegioni (Leggi Successivo).
+*/
 async function caricaComuni() {
     try {
         const response = await fetch('https://raw.githubusercontent.com/matteocontrini/comuni-json/master/comuni.json');
@@ -39,7 +44,10 @@ async function caricaComuni() {
     }
 }
 
-// Estrai e popola le regioni
+// REGIONI
+/* Il metodo popolaRegioni estra dalla lista tuttiIComuni i nomi delle regioni italiane, ordinandole alfabeticamente, per poi
+    aggiungerle al select delle regioni.
+*/
 function popolaRegioni() {
     const selectRegione = document.getElementById('selectRegione');
     
