@@ -33,7 +33,7 @@ header h2 {
 }
 
 header .container {
-    transition: transform 0.3s ease-in-out;
+    transition: transform 0.5s ease-in-out;
 }
 
 
