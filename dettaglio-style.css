@@ -2,7 +2,7 @@
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: #f8f9fa;
-    text-align: center;
+    text-align: left;
     color: #333;
     min-height: 100vh;
     display: flex;
@@ -19,6 +19,11 @@ body {
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(10px); }
     to { opacity: 1; transform: translateY(0); }
+}
+
+.icona-grande {
+    size: 50px;
+    align-items: right;
 }
 
 
