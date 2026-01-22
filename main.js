@@ -184,8 +184,7 @@ async function selezionaComune() {
         markerComuneSelezionato = L.marker([coordinate.lat, coordinate.lng], {
             icon: L.icon({
                 iconUrl: 'src/img/icons/pin.png',
-                iconRetinaUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png',
-                shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
+                
                 iconSize: [41, 41],
                 iconAnchor: [19, 41],
                 popupAnchor: [1, -34],
