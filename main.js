@@ -360,17 +360,17 @@ function getIconaMeteo(meteo) {
     
     const codice = meteo.codiceMeteo;
     
-    //  Gestione Icone
-    if (codice === 0 || codice === 1) return '☀️'; // Sereno
-    if (codice === 2) return '⛅'; // Parzialmente nuvoloso
-    if (codice === 3) return '☁️'; // Nuvoloso
-    if (codice >= 45 && codice <= 48) return '🌫️'; // Nebbia
-    if (codice >= 51 && codice <= 67) return '🌧️'; // Pioggia
-    if (codice >= 71 && codice <= 77) return '❄️'; // Neve
-    if (codice >= 80 && codice <= 81) return '🌦️'; // Rovesci
-    if (codice >= 85 && codice <= 86) return './src/img/icons/nevischio.png'; //neve ista pioggia
-    if (codice == 95 || codice == 82) return '⛈️'; // Temporale
-    if (codice >= 96 && codice <= 99) return './src/img/icons/nevischio.png'; //grandine
+    // Gestione Icone
+    if (codice === 0 || codice === 1) return '☀️';
+    if (codice === 2) return '⛅';
+    if (codice === 3) return '☁️';
+    if (codice >= 45 && codice <= 48) return '🌫️';
+    if (codice >= 51 && codice <= 67) return '🌧️';
+    if (codice >= 71 && codice <= 77) return '❄️';
+    if (codice >= 80 && codice <= 81) return '🌦️';
+    if (codice >= 85 && codice <= 86) return '<img src="./src/img/icons/nevischio.png" alt="nevischio">';
+    if (codice == 95 || codice == 82) return '⛈️';
+    if (codice >= 96 && codice <= 99) return '<img src="./src/img/icons/nevischio.png" alt="grandine">';
     
     return '☀️';
 }
