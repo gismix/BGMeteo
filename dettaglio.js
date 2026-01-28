@@ -214,7 +214,7 @@ function getCondizioneMeteo(codiceMeteo) {
  * Funzione analoga al main.js che coverte il codice meteo precedenemente ottenuto in icona
 */
 function getIconaMeteo(codiceMeteo) {
-    if (codiceMeteo === undefined || codiceMeteo_=== null) return '☀️';
+    if (codiceMeteo === undefined || codiceMeteo === null) return '☀️';
     
     const codice = meteo.codiceMeteo;
     
