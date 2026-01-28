@@ -213,8 +213,8 @@ function getCondizioneMeteo(codiceMeteo) {
 /*
  * Funzione analoga al main.js che coverte il codice meteo precedenemente ottenuto in icona
 */
-function getIconaMeteo(meteo) {
-    if (!meteo || !meteo.codiceMeteo) return '☀️';
+function getIconaMeteo(codiceMeteo) {
+    if (codiceMeteo === undefined || codiceMeteo_=== null) return '☀️';
     
     const codice = meteo.codiceMeteo;
     
