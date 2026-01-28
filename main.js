@@ -88,6 +88,8 @@ function aggiornaProvince() {
     
     markerLayer.clearLayers();
     markerComuneSelezionato = null;
+
+    mappa.setView([42.5, 12.5], 6);
     
     if (!regioneSelezionata) return;
     
@@ -123,6 +125,7 @@ function aggiornaComuni() {
     // Reset Iniziale
     selectComune.innerHTML = '<option value="">Comune</option>';
     comuniProvincia = [];
+    
 
     markerLayer.clearLayers();
     markerComuneSelezionato = null;
