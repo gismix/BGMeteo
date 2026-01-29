@@ -89,7 +89,7 @@ function aggiornaProvince() {
     markerLayer.clearLayers();
     markerComuneSelezionato = null;
 
-    mappa.setView([42.5, 12.5], 6);
+    mappa.flyTo([42.5, 12.5], 6);
     
     if (!regioneSelezionata) return;
     
@@ -159,7 +159,7 @@ async function centraMappaSullaProvincia(provincia) {
     if (comuniProvincia.length > 0) {
         const coordinate = await getCoordinateComune(comuniProvincia[0]);
         if (coordinate) {
-            mappa.setView([coordinate.lat, coordinate.lng], 9);
+            mappa.flyTo([coordinate.lat, coordinate.lng], 9);
         }
     }
 }
@@ -222,7 +222,7 @@ async function selezionaComune() {
         markerComuneSelezionato.addTo(markerLayer);
     
         // Centra la posizione della Mappa dopo aver aggiunto il Pop-Up
-        mappa.setView([coordinate.lat-7, coordinate.lng], 12);
+        mappa.flyTo([coordinate.lat+0.04, coordinate.lng], 11);
         
         // Apertura Pop-Up
         markerComuneSelezionato.openPopup();
